@@ -67,8 +67,9 @@ void Visita(long Vertice, TipoGrafo *Grafo, long *Passo, long *Visitados)
         if (Grafo->Mat[Vertice][j] > 0)
         {
             if (Visitados[j] == 0)
-            { printf(" Visita:%2ld", j);
-              Visita(j, Grafo, Passo, Visitados);
+            { 
+                printf(" Visita:%2ld", j);
+                Visita(j, Grafo, Passo, Visitados);
             }
         }
     }
