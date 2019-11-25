@@ -97,6 +97,12 @@ void Dijkstra(TipoGrafo *Grafo)
 
     CopiarMatrizGrafo(Grafo, NumVertices, Matriz);
 
+    putchar('\n');
+    printf("Matriz obtida: ");
+    putchar('\n');
+    ImprimirMatriz(NumVertices, Matriz);
+    putchar('\n');
+
     int Visitados[NumVertices];
     int Caminho[NumVertices];
     TipoPeso CustoCaminho = 0;
@@ -114,10 +120,10 @@ void Dijkstra(TipoGrafo *Grafo)
 
         for (int j = 0; j < NumVertices; j++)
         {
-            if( Visitados[j] != 1 && Matriz[0][j] < MinValor)
+            if( Visitados[j] != 1 && Matriz[j][0] < MinValor)
             {
                 min = j;
-                MinValor = Matriz[0][j];
+                MinValor = Matriz[j][0];
             }
         }
         
@@ -126,19 +132,18 @@ void Dijkstra(TipoGrafo *Grafo)
 
         for (int j = 0; j < NumVertices; j++)
         {
-            if((Matriz[0][min] + Matriz[j][min]) < Matriz[0][j])
+            if((Matriz[min][0] + Matriz[min][j]) < Matriz[j][0])
             {
-                Matriz[0][j] = Matriz[0][min] + Matriz[j][min];
+                Matriz[j][0] = Matriz[min][0] + Matriz[min][j];
             }
         }
-        
     }
 
     printf("Caminho a ser percorrido: ");
     ImprimirCaminho(NumVertices, Caminho);
     putchar('\n');
     CustoCaminho = CalculaCustoCaminho(NumVertices, Caminho, Matriz);
-    printf("\nCusto total do caminho: %3ld", CustoCaminho);
+    printf("Custo total do caminho: %3ld", CustoCaminho);
 }
 
 void GerarGrafoVazio(TipoGrafo *Grafo)
@@ -179,40 +184,6 @@ void ImprimeGrafo(TipoGrafo *Grafo)
         printf("%3ld", Grafo->Mat[i][j]);
         putchar('\n');
     }
-}
-
-void Visita(long Vertice, TipoGrafo *Grafo, long *Passo, long *Visitados)
-{
-    long j;
-
-    (*Passo)++;
-    Visitados[Vertice] = *Passo;
-    for (j = 0; j < Grafo->NumVertices; j++)
-    {
-        if (Grafo->Mat[Vertice][j] > 0)
-        {
-            if (Visitados[j] == 0)
-            { printf(" Visita:%2ld", j);
-              Visita(j, Grafo, Passo, Visitados);
-            }
-        }
-    }
-}
-
-void BuscaProfundidade(TipoGrafo *Grafo)
-{
-    long Passo, i, Visitados[MAXNUMVERTICES + 1];
-
-    Passo = 0;
-
-    for (i = 0; i < Grafo->NumVertices; i++){
-        Visitados[i] = 0;
-    }
-
-    i = 0;
-
-    printf(" Raiz:%2ld\n", i);
-    Visita(i, Grafo, &Passo, Visitados);
 }
 
 void CarregarGrafo(TipoGrafo *Grafo)
